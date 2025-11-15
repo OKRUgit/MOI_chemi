@@ -24,3 +24,19 @@ git add .gitignore
 И наконец, закоммитте файл .gitignore с помощью команды git commit:
 
 git commit -m "update ignored files"
+
+
+ok@OKEAN:~/Arduino/MOI_chemi$ git status
+Текущая ветка: master
+Ваша ветка опережает «origin/master» на 1 коммит.
+  (используйте «git push», чтобы опубликовать ваши локальные коммиты)
+
+нечего коммитить, нет изменений в рабочем каталоге
+ok@OKEAN:~/Arduino/MOI_chemi$ git push
+Перечисление объектов: 1, готово.
+Подсчет объектов: 100% (1/1), готово.
+Запись объектов: 100% (1/1), 212 байтов | 212.00 КиБ/с, готово.
+Всего 1 (изменений 0), повторно использовано 0 (изменений 0), повторно использовано пакетов 0
+To https://github.com/OKRUgit/MOI_chemi.git
+   21708d3..c27a41a  master -> master
+ok@OKEAN:~/Arduino/MOI_chemi$ 
