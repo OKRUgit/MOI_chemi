@@ -1,0 +1,47 @@
+ 
+5
+
+Добрый день. На первичном валу катера приклеил 2 магнита, установил датчик холла. 
+Данные с датчика холла поступают на Arduino due. Код выглядит следующим образом:
+
+#include <DueTimer.h>
+
+const int RPM_PIN=3;
+volatile int rpm                = 0;    // Тахометр
+volatile int rpm_tik            = 0;    // Импуслы тахометра
+
+void rpm_count(){
+  rpm_tik++;
+}
+
+void SensorData(){
+  rpm = rpm_tik;
+  rpm_tik = 0;
+}
+
+void setup(){
+   Serial.begin(9600);
+   pinMode(RPM_PIN,INPUT);
+   attachInterrupt(RPM_PIN,  rpm_count,  RISING);
+   Timer3.attachInterrupt(SensorData);
+   Timer3.start(1000000);
+}
+
+void loop(){
+    Serial.println(rpm/2*60);
+    delay(500);
+}
+на малых оборотах двигателя все соответствует истине. 
+Но при увеличении оборотов показания начинают завышаться.
+ Так при оборотах 5000-5500 (примерное значение, ибо прибор аналоговый) - 
+ получаю значение 6600 и выше. В чем может быть проблема?
+
+
+
+Заменил вызов прерывания на:
+
+attachInterrupt(digitalPinToInterrupt(RPM_PIN), rpm_count,  RISING);
+вместо
+
+attachInterrupt(RPM_PIN, rpm_count,  RISING);
+Все заработало правильно.

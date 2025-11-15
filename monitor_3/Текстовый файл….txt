@@ -1,0 +1,63 @@
+ 
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C  lcd(0x27, 16, 2);  // адрес, столбцов, строк
+
+void setup() {
+  lcd.init();           // инициализация
+  lcd.backlight();      // включить подсветку
+
+  lcd.setCursor(1, 0);  // столбец 1 строка 0
+  lcd.print("MAIN,yvsik.ru");
+
+  lcd.setCursor(0, 1);  // столбец 0 строка 1
+  lcd.print("yvsik.ru!");
+}
+
+void loop() {
+}
+
+Arduino: 1.8.19 (Linux), Плата:"LGT8F328, 64 (normal), Internal 32MHz, 1, 328P-LQFP32 (e.g. MiniEVB nano-style or WAVGAT), 57600"
+
+Внимание: platform.txt из ядра 'LGT8Fx Boards' содержит устаревшие compiler.path={runtime.tools.avr-gcc.path}/bin/, автоматически преобразовано в compiler.path=/usr/bin/. Ожидайте обновления ядра.
+Скетч использует 3468 байт (11%) памяти устройства. Всего доступно 29696 байт.
+Глобальные переменные используют 281 байт (13%) динамической памяти, оставляя 1767 байт для локальных переменных. Максимум: 2048 байт.
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 1 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 2 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 3 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 4 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 5 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 6 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 7 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 8 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 9 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 10 of 10: not in sync: resp=0x00
+Problem uploading to board.  See https://support.arduino.cc/hc/en-us/sections/360003198300 for suggestions.
+
+
+Этот отчёт будет иметь больше информации с
+включенной опцией Файл -> Настройки ->
+"Показать подробный вывод во время компиляции"
+
+
+Внимание: platform.txt из ядра 'LGT8Fx Boards' содержит устаревшие compiler.path={runtime.tools.avr-gcc.path}/bin/, автоматически преобразовано в compiler.path=/usr/bin/. Ожидайте обновления ядра.
+Скетч использует 3468 байт (11%) памяти устройства. Всего доступно 29696 байт.
+Глобальные переменные используют 281 байт (13%) динамической памяти, оставляя 1767 байт для локальных переменных. Максимум: 2048 байт.
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 1 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 2 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 3 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+avrdude: stk500_getsync() attempt 4 of 10: not in sync: resp=0x00

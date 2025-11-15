@@ -1,0 +1,7 @@
+/* мой порт
+
+Scanning...
+I2C device found at address 0x27 !
+done
+*/
+После проверки прот  адрес 0x27
