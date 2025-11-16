@@ -56,7 +56,7 @@ void loop() {
   if (time1 >= 10000000) {
     lcd.setCursor(1, 0);
     lcd.print(" TEST uF   ");
-  } else {  // Вывод на LDC
+  } else {                  // Вывод на LDC
     lcd.print(c);
 
     if (mk == 0) {
@@ -66,7 +66,7 @@ void loop() {
       lcd.print(" uF       ");
     }
   }
-  if (i == 0) {  // калибровка нуля
+  if (i == 0) {              // калибровка нуля
     i++;
     null0 = c + 0.02;
   }
