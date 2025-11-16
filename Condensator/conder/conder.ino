@@ -1,10 +1,11 @@
-// взято отсюда http://rcl-radio.ru/?p=43106
+// взято отсюда ..http://rcl-radio.ru/?p=43106
 
-#include <LiquidCrystal.h>
-LiquidCrystal lcd(7, 8, 9, 10, 11, 12);  // RS,E,D4,D5,D6,D7
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
 void setup() {
-  lcd.begin(16, 2);  // LCD 16X2
-  pinMode(A0, INPUT);
+  lcd.init();           // инициализация
+ // lcd.backlight();      // включить подсветку
 }
 unsigned long time0, time1, time2;
 float c, null0;
@@ -56,7 +57,7 @@ void loop() {
   if (time1 >= 10000000) {
     lcd.setCursor(1, 0);
     lcd.print(" TEST uF   ");
-  } else {                  // Вывод на LDC
+  } else {                  // Вывод на LCD
     lcd.print(c);
 
     if (mk == 0) {
