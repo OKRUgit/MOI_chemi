@@ -25,10 +25,10 @@ void loop(){
     digitalWrite(3,HIGH);
   }
 
-  time0=micros();
-  while(analogRead(A0)<644){
-    time2=micros()-time0;
-    if(time2>=1000000 && mk==0){
+      time0=micros();
+      while(analogRead(A0)<644){
+      time2=micros()-time0;
+      if(time2>=1000000 && mk==0){
       mk=1;
       time0=100000000;
       break;
