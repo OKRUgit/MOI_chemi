@@ -37,8 +37,8 @@ byte kn, mk, i;             // null0 так обьявлять нельза он
   }
 
   time1 = micros() - time0;
-
-  while (analogRead(A0) > 0) {
+/* Ниже цикл что на выводах (3 и 13 значит возможно подобрать поудобней на печатке)*/
+  while (analogRead(A0) > 0) { 
     pinMode(3, OUTPUT);
     pinMode(13, OUTPUT);
     digitalWrite(3, LOW);
