@@ -7,11 +7,11 @@ void setup() {
   lcd.init();           // инициализация
  // lcd.backlight();      // включить подсветку
 }
-unsigned long time0, time1, time2;
-float c, null0;
-byte kn, mk, i;
-
-void loop() {
+unsigned long time0, time1, time2; //time0, time1, time2: 
+                                   // Это имена отдельных объявляемых переменных. 
+                                   // Каждая из них будет unsigned long типом.
+float c, null0;                    // Объявляет переменную c типа float
+byte kn, mk, i;float               // null0 так обьявлять нельза она и так нУль
   lcd.setCursor(15, 0);
   lcd.print("*");
   if (mk == 0) {
