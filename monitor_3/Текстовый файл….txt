@@ -17,9 +17,13 @@ void setup() {
 void loop() {
 }
 
-Arduino: 1.8.19 (Linux), Плата:"LGT8F328, 64 (normal), Internal 32MHz, 1, 328P-LQFP32 (e.g. MiniEVB nano-style or WAVGAT), 57600"
+Arduino: 1.8.19 (Linux), Плата:"LGT8F328, 64 (normal), Internal 32MHz, 1, 328P-LQFP32 
+(e.g. MiniEVB nano-style or WAVGAT), 57600"
 
-Внимание: platform.txt из ядра 'LGT8Fx Boards' содержит устаревшие compiler.path={runtime.tools.avr-gcc.path}/bin/, автоматически преобразовано в compiler.path=/usr/bin/. Ожидайте обновления ядра.
+Внимание: platform.txt из ядра 'LGT8Fx Boards' содержит устаревшие compiler.
+path={runtime.tools.avr-gcc.path}/bin/, автоматически преобразовано в compiler.path=/usr/bin/.
+Ожидайте обновления ядра.
+
 Скетч использует 3468 байт (11%) памяти устройства. Всего доступно 29696 байт.
 Глобальные переменные используют 281 байт (13%) динамической памяти, оставляя 1767 байт для локальных переменных. Максимум: 2048 байт.
 avrdude: stk500_recv(): programmer is not responding
@@ -42,7 +46,8 @@ avrdude: stk500_recv(): programmer is not responding
 avrdude: stk500_getsync() attempt 9 of 10: not in sync: resp=0x00
 avrdude: stk500_recv(): programmer is not responding
 avrdude: stk500_getsync() attempt 10 of 10: not in sync: resp=0x00
-Problem uploading to board.  See https://support.arduino.cc/hc/en-us/sections/360003198300 for suggestions.
+Problem uploading to board. 
+See https://support.arduino.cc/hc/en-us/sections/360003198300 for suggestions.
 
 
 Этот отчёт будет иметь больше информации с
@@ -50,9 +55,13 @@ Problem uploading to board.  See https://support.arduino.cc/hc/en-us/sections/36
 "Показать подробный вывод во время компиляции"
 
 
-Внимание: platform.txt из ядра 'LGT8Fx Boards' содержит устаревшие compiler.path={runtime.tools.avr-gcc.path}/bin/, автоматически преобразовано в compiler.path=/usr/bin/. Ожидайте обновления ядра.
+Внимание: platform.txt из ядра 'LGT8Fx Boards' содержит устаревшие compiler.
+path={runtime.tools.avr-gcc.path}/bin/, автоматически преобразовано в compiler.path=/usr/bin/.
+Ожидайте обновления ядра.
 Скетч использует 3468 байт (11%) памяти устройства. Всего доступно 29696 байт.
-Глобальные переменные используют 281 байт (13%) динамической памяти, оставляя 1767 байт для локальных переменных. Максимум: 2048 байт.
+Глобальные переменные используют 281 байт (13%) динамической памяти, оставляя 1767 байт
+для локальных переменных. Максимум: 2048 байт.
+
 avrdude: stk500_recv(): programmer is not responding
 avrdude: stk500_getsync() attempt 1 of 10: not in sync: resp=0x00
 avrdude: stk500_recv(): programmer is not responding
