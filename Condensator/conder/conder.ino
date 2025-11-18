@@ -1,11 +1,13 @@
 // взято ..http://rcl-radio.ru/?p=43106
 // фото  ..https://raw.githubusercontent.com/OKRUgit/MOI_chemi/refs/heads/Okrugit/Condensator/%D0%A4%D0%BE%D1%82%D0%BE%20cond/2.png
+ // version 1.0.2
+
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 void setup() {
   lcd.init();           // инициализация
- lcd.backlight();      // включить подсветку
+  lcd.backlight();      // включить подсветку
   pinMode(A0,INPUT);
 }
 unsigned long time0,time1,time2; 
