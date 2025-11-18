@@ -1,4 +1,5 @@
 // взято ..http://rcl-radio.ru/?p=43106
+// фото  ..https://raw.githubusercontent.com/OKRUgit/MOI_chemi/refs/heads/Okrugit/Condensator/%D0%A4%D0%BE%D1%82%D0%BE%20cond/2.png
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
