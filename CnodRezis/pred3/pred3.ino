@@ -2,13 +2,15 @@
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 void setup() {
-  
+   lcd.init();               // инициализация
+   lcd.backlight();          // включить подсветку
+   pinMode(A0,INPUT);        // для проверки Конденсаторов 
 }
 // переменые
 unsigned long timeMill = 0;
 const long condesator = 100; //  для конденсатора
 const long resistor = 1000;  //  для resistor
-                             // condesator
+                             //  condesator
 unsigned long time0,time1,time2; 
 float c=0;
 float yvs0=0;
