@@ -18,7 +18,15 @@ byte kn=0;
 byte mk=0;
 byte i=0;                    //  condesator
 
+//resistor1
+int Vin=5;        // напряжение на контакте 5V платы arduino
+float Vout=0;     // напряжение на контакте A1 платы arduino
+float R1=0;       // значение сопротивления известного резистора
+float R2=3276;    // значение сопротивления неизвестного резистора
+int a2d_data=0;   // Переменная  Резистров
+float buffer=0;   // значение Резисторов
 
+                  //resistor1
 void loop() 
 {
   unsigned long inerval = millis();
@@ -59,22 +67,22 @@ void loop()
     pinMode(13,OUTPUT); 
     digitalWrite(3,LOW); 
     digitalWrite(13,LOW);
-  }
+   }
 
-  if(mk==1&&time1<1000){
+   if(mk==1&&time1<1000){
     mk=0;
-  }
+   }
 
-  lcd.setCursor(1,0);
-  c=time1;
-  c=c/1000-yvs0;
-  c=abs(c);
+    lcd.setCursor(1,0);
+    c=time1;
+    c=c/1000-yvs0;
+    c=abs(c);
 
-  if(time1>=10000000){
+   if(time1>=10000000){
     lcd.setCursor(1,0);
     lcd.print(" TEST uF   "); 
-  }
-  else{
+   }
+   else{
     lcd.print(c); 
 
     if(mk==0){
@@ -83,28 +91,26 @@ void loop()
     if(mk==1){
       lcd.print(" MkF       ");
     }
-  }
-  if(i==0){// калибровка нуля
+   }
+   if(i==0){// калибровка нуля
     i++;
     yvs0=c+0,02;
-  }
-    // digitalWrite(ledPin, !digitalRead(ledPin));
    }
- // Здесь может быть другой код, который будет выполняться без остановки
-a2d_data=analogRead(A1);  // для проверки Резисторов
-  if(a2d_data)
-  {
-    buffer=a2d_data*Vin;
-    Vout=(buffer)/1024.0;
-    buffer=Vout/(Vin-Vout); 
-    R2=R1*buffer;
-    lcd.setCursor(1,1);
-    //lcd.print("R=");
-    lcd.print(R2);
-    lcd.setCursor(14,1); 
-    lcd.print("oM");
+    // digitalWrite(ledPin, !digitalRead(ledPin));
   }
-
-
+  
+     a2d_data=analogRead(A1);  // для проверки Резисторов
+     if(a2d_data)
+      {
+        buffer=a2d_data*Vin;
+        Vout=(buffer)/1024.0;
+        buffer=Vout/(Vin-Vout); 
+        R2=R1*buffer;
+        lcd.setCursor(1,1);
+        //lcd.print("R=");
+        lcd.print(R2);
+        lcd.setCursor(14,1); 
+        lcd.print("oM");
+      }
 
 }
