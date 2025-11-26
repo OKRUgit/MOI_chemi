@@ -94,7 +94,7 @@ void loop(){
     buffer=Vout/(Vin-Vout); 
     R2=R1*buffer;
     lcd.setCursor(1,1);
-    //lcd.print("R=");
+    lcd.print("R=");
     lcd.print(R2);
     lcd.setCursor(14,1); 
     lcd.print("oM");
