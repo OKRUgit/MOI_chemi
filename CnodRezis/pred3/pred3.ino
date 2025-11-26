@@ -90,6 +90,21 @@ void loop()
   }
     // digitalWrite(ledPin, !digitalRead(ledPin));
    }
+ // Здесь может быть другой код, который будет выполняться без остановки
+a2d_data=analogRead(A1);  // для проверки Резисторов
+  if(a2d_data)
+  {
+    buffer=a2d_data*Vin;
+    Vout=(buffer)/1024.0;
+    buffer=Vout/(Vin-Vout); 
+    R2=R1*buffer;
+    lcd.setCursor(1,1);
+    //lcd.print("R=");
+    lcd.print(R2);
+    lcd.setCursor(14,1); 
+    lcd.print("oM");
+  }
 
-  // Здесь может быть другой код, который будет выполняться без остановки
+
+
 }
