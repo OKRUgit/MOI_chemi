@@ -97,9 +97,7 @@ void loop()
     yvs0=c+0,02;
    }
     // digitalWrite(ledPin, !digitalRead(ledPin));
-  }
-  
-     a2d_data=analogRead(A1);  // для проверки Резисторов
+         a2d_data=analogRead(A1);  // для проверки Резисторов
      if(a2d_data)
       {
         buffer=a2d_data*Vin;
@@ -107,10 +105,13 @@ void loop()
         buffer=Vout/(Vin-Vout); 
         R2=R1*buffer;
         lcd.setCursor(1,1);
-        //lcd.print("R=");
+        lcd.print("R=");
         lcd.print(R2);
         lcd.setCursor(14,1); 
         lcd.print("oM");
       }
+
+  }
+  
 
 }
