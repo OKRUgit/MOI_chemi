@@ -1,103 +1,130 @@
 #include <LiquidCrystal_I2C.h>
+
+// Инициализация LCD с адресом 0x27, 16 столбцов, 2 строки
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-void setup() {
-  lcd.init();               // инициализация
-  lcd.backlight();          // включить подсветку
-  pinMode(A0,INPUT);        // для проверки Конденсаторов
-}
-// переменые
-unsigned long timeMill = 0;
-const long condesator = 100; //  для конденсатора
-const long resistor = 1000;  //  для resistor
-                             // condesator
-unsigned long time0,time1,time2; 
-float c=0;
-float yvs0=0;
-byte kn=0;
-byte mk=0;
-byte i=0;                    //  condesator
+// Константы для измерения ёмкости
+const unsigned long CAPACITOR_CHECK_INTERVAL = 100;   // Период опроса в мс
+const float REF_VOLTAGE = 644.0;                      // Примерно 65% от 1023 (для 3.3В на 5В)
+const long RESISTOR_VALUE = 1000;                     // Сопротивление в Омах
 
+// Переменные для измерений
+unsigned long lastTime = 0;
+unsigned long chargeTime = 0;
+unsigned long dischargeTime = 0;
+float capacitance = 0.0;
+float zeroOffset = 0.0;
+
+// Флаги состояния
+bool measuringMicrofarads = false;  // true — измеряем в мкФ, false — в нФ
+bool calibrationDone = false;       // Калибровка нуля выполнена
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Capacitance Test");
+
+  pinMode(A0, INPUT);   // Датчик напряжения
+  pinMode(3, OUTPUT);   // Пин для заряда/разряда
+  pinMode(13, OUTPUT);  // Дополнительный пин для заряда
+}
 
 void loop() {
-  unsigned long inerval = millis();
+  unsigned long currentTime = millis();
 
-  if (inerval-timeMill>=condesator)
-  { 
-                             // Сохранить время последнего обновления
-    timeMill= inerval;
-                             // далее полный код из проверки конденсатора
-    lcd.setCursor(15,0); 
-    lcd.print("*");
-    if(mk==0){               // номинал равен нулю
-    pinMode(13,OUTPUT);
-    pinMode(3,INPUT);
-    digitalWrite(13,HIGH);
+  if (currentTime - lastTime >= CAPACITOR_CHECK_INTERVAL) {
+    lastTime = currentTime;
+    performCapacitanceMeasurement();
+  }
+}
 
-    if(mk==1)
-    {                        // подбор номинала 
-     pinMode(3,OUTPUT);
-     pinMode(13,INPUT);
-     digitalWrite(3,HIGH);
+void performCapacitanceMeasurement() {
+  // Шаг 1: Разряд конденсатора
+  digitalWrite(3, LOW);
+  digitalWrite(13, LOW);
+  pinMode(3, OUTPUT);
+  pinMode(13, OUTPUT);
+  delay(10); // Короткая задержка для полного разряда
+
+  // Шаг 2: Начало заряда через пин 13
+  pinMode(13, OUTPUT);
+  pinMode(3, INPUT); // Пин 3 как вход — высокий импеданс
+  digitalWrite(13, HIGH);
+
+  unsigned long startTime = micros();
+
+  // Ожидание достижения порога напряжения
+  while (analogRead(A0) < REF_VOLTAGE) {
+    if (micros() - startTime > 1000000UL) {
+      // Долгое время заряда — вероятно, большой конденсатор
+      measuringMicrofarads = true;
+      break;
     }
-     time0=micros();
-     while(analogRead(A0)<644)
-     {
-       time2=micros()-time0;
-       if(time2>=1000000 && mk==0){
-       mk=1;
-       time0=100000000;
-       break;
-     }
-
-     time1=micros()-time0; 
-     while(analogRead(A0)>0)
-     {
-      pinMode(3,OUTPUT); 
-      pinMode(13,OUTPUT); 
-      digitalWrite(3,LOW); 
-      digitalWrite(13,LOW);
-     }
-
-     if(mk==1&&time1<1000)
-      {
-      mk=0;
-      }
-
-      lcd.setCursor(1,0);
-      c=time1;
-      c=c/1000-yvs0;
-      c=abs(c);
-
-       if(time1>=10000000)
-       {
-        lcd.setCursor(1,0);
-        lcd.print(" TEST uF   "); 
-       }
-       else{
-       lcd.print(c); 
-
-       if(mk==0)
-       {
-         lcd.print(" NoF    ");
-       }
-        if(mk==1)
-       {
-         lcd.print(" MkF       ");
-       }
-  
-       if(i==0)
-       {                           // калибровка нуля
-        i++;
-        yvs0=c+0,02;
-       }
-  
-   
-
-    // Ваш код, который должен выполняться каждую секунду
-    // Например, мигание светодиода
-    // digitalWrite(ledPin, !digitalRead(ledPin));
   }
 
-  // Здесь может быть другой код, который будет выполняться без остановки
+  chargeTime = micros() - startTime;
+
+  // Если зарядка заняла менее 1 мс, возможно, конденсатор мал или отсутствует
+  if (chargeTime < 1000 && !measuringMicrofarads) {
+    measuringMicrofarads = false;
+  }
+
+  // Шаг 3: Разряд для проверки времени
+  digitalWrite(13, LOW);
+  digitalWrite(3, LOW);
+  pinMode(13, OUTPUT);
+  pinMode(3, OUTPUT);
+  delay(10);
+
+  // Повторный цикл для точности (необязательно, но улучшает стабильность)
+  pinMode(13, OUTPUT);
+  pinMode(3, INPUT);
+  digitalWrite(13, HIGH);
+  startTime = micros();
+
+  while (analogRead(A0) < REF_VOLTAGE) {
+    if (micros() - startTime > 1000000UL) {
+      break;
+    }
+  }
+
+  dischargeTime = micros() - startTime;
+
+  // Определяем ёмкость по времени заряда
+  float timeMs = dischargeTime / 1000.0; // мс
+  capacitance = timeMs / (RESISTOR_VALUE * 1.44); // Упрощённая формула RC
+
+  // Компенсация нуля (калибровка при первом запуске)
+  if (!calibrationDone && !measuringMicrofarads) {
+    zeroOffset = capacitance + 0.02;  // Подстройка
+    calibrationDone = true;
+  }
+
+  capacitance = abs(capacitance - zeroOffset);
+
+  // Отображение результата на LCD
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("C: ");
+
+  if (dischargeTime >= 1000000UL) {
+    lcd.print("BIG uF");
+  } else if (capacitance < 0.001) {
+    lcd.print("No Cap");
+  } else {
+    lcd.setCursor(3, 0);
+    if (measuringMicrofarads) {
+      lcd.print(capacitance, 3);
+      lcd.print(" uF");
+    } else {
+      lcd.print(capacitance * 1000, 2); // в нФ
+      lcd.print(" nF");
+    }
+  }
+
+  // Индикатор активности
+  lcd.setCursor(15, 0);
+  lcd.print("*");
 }
